@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:13:34 by anbellar          #+#    #+#             */
-/*   Updated: 2025/05/15 16:00:59 by anbellar         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:35:21 by dwsasd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ typedef struct s_pipex
 	int		pipefd[2];
 	int		pid1;
 	int		pid2;
-	char	*cmd1;
-	char	*cmd2;
 	char	**envp;
 	char	**args1;
 	char	**args2;
@@ -38,3 +36,8 @@ typedef struct s_pipex
 }	t_pipex;
 
 void	init_pipe(t_pipex *pipe);
+char	**ft_split(const char *s, char c);
+void	ft_error(t_pipex *pipe, char *msg);
+void	init_pipex(t_pipex *pipe, char **av, char **envp);
+void	start_pipex(t_pipex *pipe, char **av, char **envp);
+void	error_child(t_pipex *pipe);

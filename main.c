@@ -3,31 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:13:09 by anbellar          #+#    #+#             */
-/*   Updated: 2025/05/15 16:04:39 by anbellar         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:33:19 by dwsasd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void init_pipe(t_pipex *pipe)
-{
-	pipe->infile = -1;
-	pipe->outfile = -1;
-	pipe->pid1 = -1;
-	pipe->pid2 = -1;
-	pipe->cmd1 = NULL;
-	pipe->cmd2 = NULL;
-	pipe->args1 = NULL;
-	pipe->args2 = NULL;
-	pipe->envp = NULL;
-	if (pipe->pipefd == -1)
-		ft_error(pipe, "Pipe error");
-}
-
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	t_pipex pipe;
 
@@ -36,6 +21,6 @@ int	main(int ac, char **av)
 		ft_printf("Error: Wrong number of arguments\n");
 		return (1);
 	}
-	
+	start_pipex(&pipe, av, envp);
 	return (0);
 }
