@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:05:06 by anbellar          #+#    #+#             */
-/*   Updated: 2025/05/17 11:49:07 by dwsasd           ###   ########.fr       */
+/*   Updated: 2025/03/13 16:26:24 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "libft.h"
 
 static void	ft_initiate_vars(size_t *i, int *j, int *s_word);
 static int	word_count(const char *str, char c);

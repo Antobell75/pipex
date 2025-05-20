@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 14:13:09 by anbellar          #+#    #+#             */
-/*   Updated: 2025/05/18 17:33:19 by dwsasd           ###   ########.fr       */
+/*   Created: 2024/11/05 15:09:55 by anbellar          #+#    #+#             */
+/*   Updated: 2024/12/02 18:46:25 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+char	*ft_strdup(char *str)
 {
-	t_pipex pipe;
+	int		i;
+	char	*cpy;
 
-	if (ac != 5)
+	i = 0;
+	cpy = malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (cpy == NULL)
+		return (NULL);
+	while (str[i])
 	{
-		ft_printf("Error: Wrong number of arguments\n");
-		return (1);
+		cpy[i] = str[i];
+		i++;
 	}
-	start_pipex(&pipe, av, envp);
-	return (0);
+	cpy[i] = '\0';
+	return (cpy);
 }

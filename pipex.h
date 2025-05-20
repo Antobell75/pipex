@@ -6,11 +6,12 @@
 /*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:13:34 by anbellar          #+#    #+#             */
-/*   Updated: 2025/05/18 19:35:21 by dwsasd           ###   ########.fr       */
+/*   Updated: 2025/05/20 04:30:25 by dwsasd           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ft_printf/ft_printf.h"
+#include "./printf/ft_printf.h"
+#include "./libft/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,21 +24,11 @@
 # define PIPEX_H
 #endif
 
-typedef struct s_pipex
-{
-	int		pipefd[2];
-	int		pid1;
-	int		pid2;
-	char	**envp;
-	char	**args1;
-	char	**args2;
-	int		infile;
-	int		outfile;
-}	t_pipex;
-
-void	init_pipe(t_pipex *pipe);
-char	**ft_split(const char *s, char c);
-void	ft_error(t_pipex *pipe, char *msg);
-void	init_pipex(t_pipex *pipe, char **av, char **envp);
-void	start_pipex(t_pipex *pipe, char **av, char **envp);
-void	error_child(t_pipex *pipe);
+void	ft_error();
+int		open_file(char *file, int in_or_out);
+void	ft_free_tab(char **tab);
+char	*my_getenv(char *name, char **env);
+char	*get_path(char *cmd, char **env);
+void	exec(char *cmd, char **env);
+void	child(char **av, int *p_fd, char **env);
+void	parent(char **av, int *p_fd, char **env);
