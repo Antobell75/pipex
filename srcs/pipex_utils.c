@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 04:04:55 by dwsasd            #+#    #+#             */
-/*   Updated: 2025/05/20 04:18:27 by dwsasd           ###   ########.fr       */
+/*   Updated: 2025/06/05 12:55:06 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	ft_error()
+void	ft_error(char *str)
 {
-	ft_printf("Error\n");
-	exit(0);
+	perror(str);
+	exit(1);
 }
 
 int	open_file(char *file, int in_or_out)

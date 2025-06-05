@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dwsasd <dwsasd@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:46:42 by dwsasd            #+#    #+#             */
-/*   Updated: 2025/05/20 04:30:45 by dwsasd           ###   ########.fr       */
+/*   Updated: 2025/06/05 13:23:03 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	exec(char *cmd, char **env)
 	char	*path;
 
 	s_cmd = ft_split(cmd, ' ');
-	path = get_path(s_cmd[0], env);
+	path = NULL;
+	if (env[0])
+		path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
 	{
 		ft_putstr_fd("pipex: command not found: ", 2);
@@ -39,7 +41,7 @@ void	child(char **av, int *p_fd, char **env)
 	exec(av[2], env);
 }
 
-void	parent(char **av, int *p_fd, char **env)
+void	child2(char **av, int *p_fd, char **env)
 {
 	int		fd;
 
@@ -53,16 +55,24 @@ void	parent(char **av, int *p_fd, char **env)
 int	main(int ac, char **av, char **env)
 {
 	int		p_fd[2];
-	pid_t	pid;
+	pid_t	pid1;
+	pid_t	pid2;
 
 	if (ac != 5)
-		ft_error();
+		ft_error("Invalid number of arguments");
 	if (pipe(p_fd) == -1)
-		exit(-1);
-	pid = fork();
-	if (pid == -1)
-		exit(-1);
-	if (!pid)
+		ft_error("pipe");
+	pid1 = fork();
+	if (pid1 == -1)
+		ft_error("fork1");
+	if (pid1 == 0)
 		child(av, p_fd, env);
-	parent(av, p_fd, env);
+	pid2 = fork();
+	if (pid2 == -1)
+		ft_error("fork2");
+	if (pid2 == 0)
+		child2(av, p_fd, env);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+	return (0);
 }
