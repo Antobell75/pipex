@@ -33,8 +33,7 @@ SRC = ft_bzero.c      \
 	ft_itoa.c         \
 	ft_putendl_fd.c   \
 	ft_striteri.c     \
-	ft_strtrim.c      \
-	ft_strcmp.c
+	ft_strtrim.c      
 
 SRC_BONUS = ft_lstnew_bonus.c \
 	ft_lstsize_bonus.c		  \

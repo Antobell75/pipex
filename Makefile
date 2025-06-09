@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 -O3
+CFLAGS = #-Wall -Werror -Wextra -g3 -O3
 
 SRC = srcs/pipex.c \
 	srcs/pipex_utils.c

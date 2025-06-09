@@ -6,7 +6,7 @@
 /*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 04:04:55 by dwsasd            #+#    #+#             */
-/*   Updated: 2025/06/05 12:55:06 by anbellar         ###   ########.fr       */
+/*   Updated: 2025/06/09 18:46:28 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	open_file(char *file, int in_or_out)
 	if (in_or_out == 1)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (ret == -1)
-		exit(0);
+		ft_error(file);
 	return (ret);
 }
 
@@ -45,28 +45,16 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-char	*my_getenv(char *name, char **env)
+char	**get_env_path(char **envp)
 {
-	int		i;
-	int		j;
-	char	*sub;
+	int	i;
 
 	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		sub = ft_substr(env[i], 0, j);
-		if (ft_strcmp(sub, name) == 0)
-		{
-			free(sub);
-			return (env[i] + j + 1);
-		}
-		free(sub);
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
-	}
-	return (NULL);
+	if (!envp[i])
+		return (NULL);
+	return (ft_split(envp[i] + 5, ':'));
 }
 
 char	*get_path(char *cmd, char **env)
@@ -78,7 +66,7 @@ char	*get_path(char *cmd, char **env)
 	char	**s_cmd;
 
 	i = -1;
-	allpath = ft_split(my_getenv("PATH", env), ':');
+	allpath = get_env_path(env);
 	s_cmd = ft_split(cmd, ' ');
 	while (allpath[++i])
 	{

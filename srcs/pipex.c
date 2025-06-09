@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 19:46:42 by dwsasd            #+#    #+#             */
-/*   Updated: 2025/06/05 13:23:03 by anbellar         ###   ########.fr       */
+/*   Created: 2025/06/09 18:42:36 by anbellar          #+#    #+#             */
+/*   Updated: 2025/06/09 18:46:33 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,23 @@ void	exec(char *cmd, char **env)
 
 	s_cmd = ft_split(cmd, ' ');
 	path = NULL;
-	if (env[0])
+	if (access(s_cmd[0], F_OK | X_OK) == 0)
+		path = ft_strdup(s_cmd[0]);
+	else if (!env[0])
 		path = get_path(s_cmd[0], env);
+	else
+	{
+		ft_putstr_fd("pipex: env not found\n", 2);
+		ft_free_tab(s_cmd);
+		exit(1);
+	}
 	if (execve(path, s_cmd, env) == -1)
 	{
 		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
 		ft_free_tab(s_cmd);
-		exit(0);
+		free(path);
+		exit(1);
 	}
 }
 
@@ -34,10 +43,12 @@ void	child(char **av, int *p_fd, char **env)
 {
 	int		fd;
 
+	close(p_fd[0]);
 	fd = open_file(av[1], 0);
 	dup2(fd, 0);
+	close(fd);
 	dup2(p_fd[1], 1);
-	close(p_fd[0]);
+	close(p_fd[1]);
 	exec(av[2], env);
 }
 
@@ -45,10 +56,12 @@ void	child2(char **av, int *p_fd, char **env)
 {
 	int		fd;
 
+	close(p_fd[1]);
 	fd = open_file(av[4], 1);
 	dup2(fd, 1);
+	close(fd);
 	dup2(p_fd[0], 0);
-	close(p_fd[1]);
+	close(p_fd[0]);
 	exec(av[3], env);
 }
 
@@ -72,6 +85,8 @@ int	main(int ac, char **av, char **env)
 		ft_error("fork2");
 	if (pid2 == 0)
 		child2(av, p_fd, env);
+	close(p_fd[1]);
+	close(p_fd[0]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 	return (0);
