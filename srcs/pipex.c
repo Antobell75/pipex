@@ -6,7 +6,7 @@
 /*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:42:36 by anbellar          #+#    #+#             */
-/*   Updated: 2025/06/09 18:46:33 by anbellar         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:29:20 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ void	exec(char *cmd, char **env)
 	char	*path;
 
 	s_cmd = ft_split(cmd, ' ');
+	if (s_cmd[0] == NULL)
+	{
+		free(s_cmd);
+		ft_error("split");
+	}
 	path = NULL;
-	if (access(s_cmd[0], F_OK | X_OK) == 0)
+	if (access(s_cmd[0], F_OK & X_OK) == 0)
 		path = ft_strdup(s_cmd[0]);
-	else if (!env[0])
-		path = get_path(s_cmd[0], env);
 	else
+		path = get_path(s_cmd[0], env);
+	if (!path)
 	{
 		ft_putstr_fd("pipex: env not found\n", 2);
 		ft_free_tab(s_cmd);
