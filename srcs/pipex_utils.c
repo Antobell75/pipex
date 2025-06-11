@@ -6,7 +6,7 @@
 /*   By: anbellar <anbellar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 04:04:55 by dwsasd            #+#    #+#             */
-/*   Updated: 2025/06/11 17:28:53 by anbellar         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:35:46 by anbellar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ char	*get_path(char *cmd, char **env)
 	}
 	ft_free_tab(allpath);
 	ft_free_tab(s_cmd);
-	return (cmd);
+	return (NULL);
 }
